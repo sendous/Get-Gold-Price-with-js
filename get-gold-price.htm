@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Display Weather</title>
+    <script>
+        function fetchAndDisplayValue() {
+            fetch('https://kimiadevelop.ir/unitprices')
+                .then(response => response.json())
+                .then(json => {
+                    const jsonString = JSON.stringify(json)
+                    const data = JSON.parse(jsonString);
+                    const gold18k = data.find(item => item.Key === "Gold-18K");
+                    const value = gold18k.Value;
+
+                    // Display the extracted data in the HTML
+                    const priceElement = document.getElementById('price');
+                    priceElement.innerHTML = (value / 10).toLocaleString('fa-IR') + ' تومان ';
+                    console.log(value)
+                })
+                .catch(error => console.error(error));
+        }
+
+        fetchAndDisplayValue();
+        setInterval(fetchAndDisplayValue, 60000);
+    </script>
+</head>
+
+<body>
+    <label id="price"></label>
+</body>
+
+</html>
